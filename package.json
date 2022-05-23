@@ -1,0 +1,29 @@
+{
+  "name": "@graphql-nestjs-pagination/mono",
+  "private": true,
+  "version": "1.0.0",
+  "description": "GraphQL pagination with React and NestJS",
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "workspaces/*"
+    ]
+  },
+  "scripts": {
+    "build:app": "yarn workspace @graphql-nestjs-pagination/frontend build",
+    "build:api": "yarn workspace @graphql-nestjs-pagination/backend build",
+    "start:app": "yarn workspace @graphql-nestjs-pagination/frontend start",
+    "start:api": "yarn workspace @graphql-nestjs-pagination/backend start",
+    "start:api:dev": "yarn workspace @graphql-nestjs-pagination/backend start:dev"
+  },
+  "keywords": [
+    "nestjs",
+    "react",
+    "monorepo",
+    "graphql",
+    "pagination",
+    "workspaces"
+  ],
+  "author": "kevinokeh@gmail.com",
+  "license": "ISC"
+}
