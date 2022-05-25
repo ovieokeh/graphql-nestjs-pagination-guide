@@ -48,7 +48,7 @@ button[data-is-active=true] {
 
 .skeleton {
   width: 300px;
-  height: 18px;
+  height: 19px;
   margin: 16px auto;
   background-color: white;
 }
