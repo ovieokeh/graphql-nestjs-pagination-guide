@@ -1,49 +1,29 @@
-import { Model } from 'mongoose'
+import mongoose from 'mongoose'
+import { array, name, email, date } from 'minifaker'
+import 'minifaker/locales/en'
+import 'dotenv/config'
 
-import { UserDocument, UserModel } from '../mongoose/schema'
+import { UserDocument, UserSchema } from '../mongoose/schema'
 
-export default async function seedDatabase(
-  model: Model<UserDocument>,
-): Promise<boolean> {
-  const users: UserModel[] = [
-    {
-      firstName: 'Mattia',
-      lastName: 'Parisi',
-      email: 'mattiaparisi@gmail.com',
-      dateOfBirth: new Date(),
-    },
-    {
-      firstName: 'Alessia',
-      lastName: 'Ciccarello',
-      email: 'alessiaciccarello@gmail.com',
-      dateOfBirth: new Date(),
-    },
-    {
-      firstName: 'Ciccio',
-      lastName: 'Belo',
-      email: 'cicciobelo@gmail.com',
-      dateOfBirth: new Date(),
-    },
-    {
-      firstName: 'Santo',
-      lastName: 'Terranova',
-      email: 'santoterranova@gmail.com',
-      dateOfBirth: new Date(),
-    },
-    {
-      firstName: 'Damiano',
-      lastName: 'Pulvirenti',
-      email: 'damianopulvirenti@gmail.com',
-      dateOfBirth: new Date(),
-    },
-    {
-      firstName: 'Enrico',
-      lastName: 'Bruno',
-      email: 'enricobruno@gmail.com',
-      dateOfBirth: new Date(),
-    },
-  ]
+export default async function seedDatabase(numberOfUsers = 100): Promise<void> {
+  const mockUsers = array(numberOfUsers, () => ({
+    firstName: name(),
+    lastName: name(),
+    email: email(),
+    dateOfBirth: date(),
+  }))
 
-  await model.create(...users)
-  return true
+  console.log('connecting to database')
+  await mongoose.connect(process.env.MONGODB_URI)
+  console.log('connected')
+
+  const model = mongoose.model<UserDocument>('Usermodels', UserSchema)
+
+  console.log('seeding users')
+  await model.create(...mockUsers)
+  console.log('seeding users -- done')
+
+  process.exit(0)
 }
+
+seedDatabase()
